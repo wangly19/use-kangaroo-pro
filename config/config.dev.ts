@@ -1,7 +1,10 @@
-import { defineConfig } from 'umi';
+import { defineConfig } from 'umi'
 
 export default defineConfig({
   cssModulesTypescriptLoader: {
-    mode: 'emit',
+    mode: 'emit'
   },
-});
+  define: {
+    APP_SELECT_KEY: 'key'
+  }
+})

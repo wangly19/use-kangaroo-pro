@@ -5,6 +5,10 @@
     "build": "cross-env UMI_ENV=pro umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
@@ -12,12 +16,7 @@
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
@@ -28,7 +27,13 @@
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "@umijs/fabric": "^2.5.7",
     "@umijs/test": "^3.4.7",
+    "eslint": "^7.23.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-react": "^7.23.1",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",

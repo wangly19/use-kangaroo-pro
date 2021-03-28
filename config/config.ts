@@ -1,11 +1,11 @@
-import { defineConfig } from 'umi';
-import routes from './routes';
+import { defineConfig } from 'umi'
+import routes from './routes'
 
 export default defineConfig({
   nodeModulesTransform: {
-    type: 'none',
+    type: 'none'
   },
   routes,
   fastRefresh: {},
-  hash: true,
-});
+  hash: true
+})
