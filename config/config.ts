@@ -2,6 +2,7 @@ import { defineConfig } from 'umi'
 import routes from './routes'
 
 export default defineConfig({
+  plugins: ['plugin-transform-api'],
   nodeModulesTransform: {
     type: 'none'
   },
@@ -9,4 +10,8 @@ export default defineConfig({
   fastRefresh: {},
   hash: true,
   antd: {},
+  interface: {
+    path: 'services',
+    requestPath: '@/utils/request'
+  }
 })

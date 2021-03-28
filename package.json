@@ -22,6 +22,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
     "cross-env": "^7.0.3",
+    "plugin-transform-api": "^1.0.0",
     "umi": "^3.4.7"
   },
   "devDependencies": {
