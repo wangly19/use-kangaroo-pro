@@ -6,25 +6,19 @@ module.exports = {
   },
   globals: {
     page: true,
-    window: true
+    window: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint'],
+  extends: [require.resolve('@umijs/fabric/dist/eslint')],
   rules: {
     /** [off]: React 17 不再需要声明React */
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 };

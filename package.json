@@ -27,18 +27,16 @@
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "@umijs/fabric": "^2.5.7",
     "@umijs/test": "^3.4.7",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-react": "^7.23.1",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
-    "typescript": "^4.1.2",
+    "typescript": "^4.2.3",
     "yorkie": "^2.0.0"
   }
 }
