@@ -19,6 +19,7 @@
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
+    "@ant-design/pro-form": "^1.19.0",
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
     "cross-env": "^7.0.3",

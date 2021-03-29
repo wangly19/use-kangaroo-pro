@@ -1,0 +1,20 @@
+.flex(@model: flex, @justifyContent: center, @alignItems: center, @direction: initial) {
+  display: @model;
+  flex-direction: @direction;
+  align-content: @alignItems;
+  justify-content: @justifyContent;
+}
+
+.position(
+  @model: relative,
+  @top: initial,
+  @right: initial,
+  @bottom: initial,
+  @left: initial
+) {
+  position: @model;
+  top: @top;
+  right: @right;
+  bottom: @bottom;
+  left: @left;
+}
