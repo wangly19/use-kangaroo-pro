@@ -1,3 +1,8 @@
+import type { ReactNode } from 'react'
+import type {
+  BasicLayoutProps
+} from '@ant-design/pro-layout';
+
 declare module '*.css';
 declare module '*.less';
 declare module '*.png';
@@ -16,3 +21,9 @@ declare const INTERFACE_URL: string // 接口请求地址
 declare const OSS_URL: string // OSS资源地址
 
 declare const APP_SELECT_KEY: string // 系统调用密钥
+
+
+export type AuthRoute = BasicLayoutProps['route'] & {
+  icon?: ReactNode | string
+  auth?: string[]
+}

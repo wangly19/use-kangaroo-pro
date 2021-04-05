@@ -1,13 +1,33 @@
+@import '~antd/es/style/themes/default.less';
 .appBackground {
   height: 100vh;
   background: #f0f2f5 url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg') no-repeat 50%;
-}
-
-.appTipBar {
 }
 
 .appLayout {
   min-width: 260px;
   width: 368px;
   margin: 0 auto;
+}
+
+.icon {
+  margin-left: 16px;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: @primary-color;
+  }
+}
+
+.other {
+  margin-top: 24px;
+  line-height: 22px;
+  text-align: left;
+  .register {
+    float: right;
+  }
 }

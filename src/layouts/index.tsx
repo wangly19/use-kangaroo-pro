@@ -1,18 +1,23 @@
 import type { FunctionComponent, ReactNode } from 'react';
+import type { ConnectStore } from '@/models/Connect';
 import type {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
 } from '@ant-design/pro-layout';
 import { useState } from 'react';
-import { history, Link } from 'umi'
+import { history, Link, connect } from 'umi'
 import ProLayout, { PageContainer } from '@ant-design/pro-layout';
+import GlobalHeader from './Global/Header'
+import AuthPage from '@/components/action/AuthPage'
 import styles from './index.less';
+import type { AuthRoute } from '@/types';
 
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
   route: ProLayoutProps['route'] & {
-    authority: string[];
+    auth: string[];
   };
+  authRoutes: AuthRoute[]
 } & ProLayoutProps;
 
 const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
@@ -20,7 +25,7 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
   /** [state] Menu收缩状态 */
   const [collapse, setCollapse] = useState<boolean>(false)
 
-  const { children, location } = props
+  const { children, location, authRoutes } = props
 
   /** [MenuRender]: 菜单栏渲染 */
   const MenuChildrenRender = (
@@ -41,27 +46,21 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
         fixSiderbar
         iconfontUrl="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js"
         route={{
-          routes: [
-            {
-              path: '/desktop',
-              name: '首页',
-              icon: 'icon-shoucang1',
-              routes: [{
-                path: '/desktop',
-                name: '首页',
-                icon: 'icon-shoucang1',
-              }]
-            },
-          ],
+          routes: authRoutes
         }}
         menuItemRender={ MenuChildrenRender }
+        rightContentRender= {() => <GlobalHeader/>}
       >
         <PageContainer content="欢迎使用">
-          <div>{children}</div>
+          <AuthPage routes={ authRoutes } path={ location?.pathname }>
+            { children }
+          </AuthPage>
         </PageContainer>
       </ProLayout>
-    </div>
+    </div>  
   );
 };
 
-export default AppLayout;
+export default connect(({ global }: ConnectStore) => ({
+  authRoutes: global.routes
+}))(AppLayout);;

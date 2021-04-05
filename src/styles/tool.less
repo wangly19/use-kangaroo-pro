@@ -18,3 +18,11 @@
   bottom: @bottom;
   left: @left;
 }
+
+.ellipsis (@liens: 1) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: @liens;
+  -webkit-box-orient: vertical;
+}

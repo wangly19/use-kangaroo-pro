@@ -22,13 +22,16 @@
     "@ant-design/pro-form": "^1.19.0",
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
+    "classnames": "^2.2.6",
     "cross-env": "^7.0.3",
     "plugin-transform-api": "^1.0.0",
+    "redux-logger": "^3.0.6",
     "umi": "^3.4.7"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/redux-logger": "^3.0.8",
     "@typescript-eslint/parser": "^4.19.0",
     "@umijs/fabric": "^2.5.7",
     "@umijs/test": "^3.4.7",

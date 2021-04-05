@@ -10,8 +10,14 @@ export default defineConfig({
   fastRefresh: {},
   hash: true,
   antd: {},
+  dva: {
+  },
+  mock: false,
+  alias: {
+    '@/types': '../typings.d.ts'
+  },
   interface: {
     path: 'services',
     requestPath: '@/utils/request'
-  }
+  },
 })
