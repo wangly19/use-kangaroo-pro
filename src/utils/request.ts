@@ -1,9 +1,10 @@
-import { extend } from 'umi-request';
-import { notification } from 'antd';
 
-// function isSystemError (code: string): boolean {
-//   return code.includes('S')
-// }
+import { createElement } from 'react';
+import { history } from 'umi'
+import type { ResponseError } from 'umi-request';
+import { extend } from 'umi-request';
+import { notification, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const codeMessage: Record<number, string> = {
   200: '服务器成功返回请求的数据。',
@@ -24,28 +25,67 @@ const codeMessage: Record<number, string> = {
 };
 
 /** 异常处理程序 */
-const errorHandler = (error: { response: Response }): Response => {
+function errorHandler (error: ResponseError) {
   const { response } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
+
     notification.error({
       message: `请求错误 ${status}: ${url}`,
       description: errorText,
     });
-  } else if (!response) {
-    notification.error({
-      description: '您的网络发生异常，无法连接服务器',
-      message: '网络异常',
-    });
   }
-  return response;
+
+  return error 
 };
+
+/**
+ * 清除当前用户身份信息，并且跳转到登录页面
+ */
+function clearUserTraces () {
+  Modal.confirm({
+    title: '提示信息',
+    icon: createElement(ExclamationCircleOutlined),
+    content: '您当前设备信息已过期，可以取消继续留在该页面，或者重新登录。',
+    okText: "登录",
+    cancelText: "关闭",
+    onOk() {
+      history.replace('/login')
+    }
+  })
+}
 
 /** 配置request请求时的默认参数 */
 const request = extend({
-  prefix: 'https://mock.mengxuegu.com/mock/606abc3ce34b2e50a355cb42/api',
-  errorHandler,
+  errorHandler
 });
+
+request.interceptors.response.use(
+  async (response: Response) => {
+    const responseBody = await response.clone().json();
+
+    /** [code success] 接口请求成功，不需要额外处理 */
+    if (responseBody.code === '200') {
+      return responseBody.data
+    }
+
+    /** 
+     * [ u -> 4001 ] 用户身份已经过期，清除后重新生成新的身份  
+     * [ u -> 4002 ] 用户身份异常，清除后重新生成新的身份  
+     * [ u -> 4003 ] 用户在其他地方登录，清除后重新生成新的身份
+     * */
+    if (
+      responseBody.code === 'U4001' || 
+      responseBody.code === 'U4002' || 
+      responseBody.code === 'U4003'
+    ) {
+      clearUserTraces()
+      return undefined
+    }
+
+    throw new Error('request fail ...')
+  }
+)
 
 export default request;

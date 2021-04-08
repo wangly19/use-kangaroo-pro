@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { history } from 'umi'
+import { history, useModel } from 'umi'
 import { Tabs } from 'antd';
 import ProForm, { ProFormText, ProFormCheckbox } from '@ant-design/pro-form';
 import {
@@ -13,6 +13,9 @@ import styles from './index.less';
 
 export default () => {
   const [, setTabType] = useState<string>('account');
+  const { initialState, setInitialState } = useModel('@@initialState');
+
+  console.log(initialState, setInitialState)
 
   const onLoginFinish = (value: any): Promise<any> => {
     history.replace('/')

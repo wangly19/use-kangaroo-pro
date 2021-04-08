@@ -1,10 +1,8 @@
-import type { Dispatch, UserInfo } from 'umi';
-import { history, getDvaApp } from 'umi';
+import { createElement } from 'react'
+import { history, fetchUserInfo } from 'umi';
 import { message } from 'antd';
-
-import type { ConnectStore } from './models/Connect';
-import { checkPageAuth, diffRoutes, whitePath } from './utils/auth';
-import authRoutes from '../config/authRoutes';
+import AuthPage from './components/action/AuthPage'
+import type { AuthRoute } from '@/types';
 
 export const dva = {
   config: {
@@ -14,36 +12,37 @@ export const dva = {
   },
 };
 
-export function onRouteChange(routeInfo: any) {
-  const token: string | null = localStorage.getItem('access_token');
-  // eslint-disable-next-line no-underscore-dangle
-  const store: any = getDvaApp()._store;
-
-  const dispatch: Dispatch = store?.dispatch;
-
-  const { user } = store?.getState() as ConnectStore;
-
-  if (!whitePath.includes(routeInfo.location.pathname)) {
-    if (token) {
-      /** [info] 检查用户信息是否存在 */
-      if (!user?.userInfo) {
-        dispatch({
-          type: 'user/getUserInfo',
-        }).then((res: UserInfo | undefined) => {
-          if (res) {
-            const asyncRoutes = diffRoutes(authRoutes, res.useMenuAuth);
-            dispatch({
-              type: 'global/setRoutes',
-              routes: asyncRoutes,
-            });
-            if (!checkPageAuth(asyncRoutes, routeInfo.location.pathname)) {
-              history.replace('/error')
-            }
-          }
-        });
-      }
-    } else {
-      history.replace('/login');
+export async function getInitialState(): Promise<{
+  user?: API.UserInfo;
+  queryUserInfo?: () => Promise<API.UserInfo | undefined>;
+}> {
+  const queryUserInfo = async () => {
+    try {
+      const user = await fetchUserInfo();
+      return user;
+    } catch (error) {
+      history.replace('/login')
     }
+    return undefined;
+  };
+  // 如果是登录页面，不执行
+  if (history.location.pathname !== '/login') {
+    const user = await fetchUserInfo();
+    return {
+      queryUserInfo,
+      user,
+    };
   }
+  return {
+    queryUserInfo,
+  };
+}
+
+export function rootContainer(container: React.ReactNode, { routes }: {
+  routes: AuthRoute[]
+}) {
+  const props: any = {
+    routes
+  }
+  return createElement(AuthPage, props, container);
 }

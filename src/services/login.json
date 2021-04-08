@@ -1,4 +1,4 @@
 {
-  "fetchLogin": "POST /service-admin/v1/user/login",
-  "fetchUserInfo": "POST /service-admin/v1/user/info"
+  "fetchLogin": "POST /api/service-admin/v1/user/login",
+  "fetchUserInfo": "POST /api/service-admin/v1/user/info"
 }

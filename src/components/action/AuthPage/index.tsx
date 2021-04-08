@@ -1,26 +1,30 @@
 import type { AuthRoute } from "@/types";
-import { checkPageAuth } from "@/utils/auth";
-import type { FC} from "react";
+import { diffRoutes } from "@/utils/auth";
+import type { FC, ReactElement} from "react";
+import { cloneElement } from 'react'
+import { useModel } from 'umi'
 
 
 
 interface AuthPageProps {
   routes: AuthRoute[],
-  path: string | undefined
+  children: ReactElement
 }
 
 const AuthPage: FC<AuthPageProps> = (props) => {
 
   /** [props] */
-  const { children, routes, path } = props
+  const { children, routes } = props
 
-  const isShow = () => {
-    return path && checkPageAuth(routes, path)
-  }
+  /** [model] */
+  const { initialState } = useModel('@@initialState')
+  
+  console.log(initialState, 'initialState')
 
-  return <>
-  { isShow() ? children : null }
-  </>
+  return cloneElement(children, {
+    ...children.props,
+    routes: diffRoutes(routes, ['角色1', '角色10'])
+  })
 }
 
 export default AuthPage

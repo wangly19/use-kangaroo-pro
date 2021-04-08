@@ -12,7 +12,6 @@ export default defineConfig({
   antd: {},
   dva: {
   },
-  mock: false,
   alias: {
     '@/types': '../typings.d.ts'
   },

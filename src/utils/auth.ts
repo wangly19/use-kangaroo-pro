@@ -14,8 +14,8 @@ export function hasRoles (route: AuthRoute, authKeys: string[]): boolean {
     return authKeys.some((k: string) => route.auth?.includes(k))
   }
 
-  /** @default false */
-  return false
+  /** @default true 没有权限需要检测 */
+  return true
 }
 
 /**
@@ -27,6 +27,7 @@ export function hasRoles (route: AuthRoute, authKeys: string[]): boolean {
   const result: AuthRoute[] = []
   routes.forEach((item: AuthRoute) => {
     const cloneRoute: AuthRoute = { ...item }
+    console.log(hasRoles(cloneRoute, authKeys), cloneRoute?.path)
     if (hasRoles(cloneRoute, authKeys)) {
       /** [if] 是否存在children节点 */
       if (cloneRoute.routes) {
@@ -49,6 +50,7 @@ export function diffRoutes (routes: AuthRoute[], authKeys: string[]): AuthRoute[
   if (authKeys.includes('admin')) {
     return routes
   }
+  
   return filterRoutes(routes, authKeys)
 }
 

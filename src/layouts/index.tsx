@@ -1,14 +1,12 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import type { ConnectStore } from '@/models/Connect';
 import type {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
 } from '@ant-design/pro-layout';
 import { useState } from 'react';
-import { history, Link, connect } from 'umi'
+import { history, Link } from 'umi'
 import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 import GlobalHeader from './Global/Header'
-import AuthPage from '@/components/action/AuthPage'
 import styles from './index.less';
 import type { AuthRoute } from '@/types';
 
@@ -25,7 +23,7 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
   /** [state] Menu收缩状态 */
   const [collapse, setCollapse] = useState<boolean>(false)
 
-  const { children, location, authRoutes } = props
+  const { children, location, route } = props
 
   /** [MenuRender]: 菜单栏渲染 */
   const MenuChildrenRender = (
@@ -45,22 +43,16 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
         onMenuHeaderClick={() => history.push('/')}
         fixSiderbar
         iconfontUrl="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js"
-        route={{
-          routes: authRoutes
-        }}
+        route={ route }
         menuItemRender={ MenuChildrenRender }
         rightContentRender= {() => <GlobalHeader/>}
       >
         <PageContainer content="欢迎使用">
-          <AuthPage routes={ authRoutes } path={ location?.pathname }>
-            { children }
-          </AuthPage>
+          { children }
         </PageContainer>
       </ProLayout>
     </div>  
   );
 };
 
-export default connect(({ global }: ConnectStore) => ({
-  authRoutes: global.routes
-}))(AppLayout);;
+export default AppLayout
