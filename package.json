@@ -23,9 +23,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@umijs/preset-react": "1.x",
     "classnames": "^2.2.6",
-    "cross-env": "^7.0.3",
-    "plugin-transform-api": "^1.0.0",
-    "redux-logger": "^3.0.6",
+    "dayjs": "^1.10.4",
     "umi": "^3.4.7"
   },
   "devDependencies": {
@@ -35,12 +33,16 @@
     "@typescript-eslint/parser": "^4.19.0",
     "@umijs/fabric": "^2.5.7",
     "@umijs/test": "^3.4.7",
+    "antd-dayjs-webpack-plugin": "^1.0.6",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "lint-staged": "^10.0.7",
+    "plugin-transform-api": "^1.0.0",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
+    "redux-logger": "^3.0.6",
     "typescript": "^4.2.3",
     "yorkie": "^2.0.0"
   }

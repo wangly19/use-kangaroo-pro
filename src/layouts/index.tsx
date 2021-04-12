@@ -1,14 +1,13 @@
 import type { FunctionComponent, ReactNode } from 'react';
+import type { AuthRoute} from '@/types';
 import type {
   BasicLayoutProps as ProLayoutProps,
-  MenuDataItem,
-} from '@ant-design/pro-layout';
+  MenuDataItem} from '@ant-design/pro-layout';
 import { useState } from 'react';
 import { history, Link } from 'umi'
-import ProLayout, { PageContainer } from '@ant-design/pro-layout';
+import ProLayout from '@ant-design/pro-layout';
 import GlobalHeader from './Global/Header'
 import styles from './index.less';
-import type { AuthRoute } from '@/types';
 
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
@@ -37,19 +36,15 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
         location={{
           pathname: location?.pathname
         }}
-        navTheme="light"
         collapsed={ collapse }
         onCollapse={ setCollapse }
         onMenuHeaderClick={() => history.push('/')}
-        fixSiderbar
-        iconfontUrl="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js"
+        iconfontUrl={ ICON_FONT_URL }
         route={ route }
         menuItemRender={ MenuChildrenRender }
         rightContentRender= {() => <GlobalHeader/>}
       >
-        <PageContainer content="欢迎使用">
-          { children }
-        </PageContainer>
+         { children }
       </ProLayout>
     </div>  
   );

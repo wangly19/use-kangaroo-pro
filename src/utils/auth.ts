@@ -27,7 +27,6 @@ export function hasRoles (route: AuthRoute, authKeys: string[]): boolean {
   const result: AuthRoute[] = []
   routes.forEach((item: AuthRoute) => {
     const cloneRoute: AuthRoute = { ...item }
-    console.log(hasRoles(cloneRoute, authKeys), cloneRoute?.path)
     if (hasRoles(cloneRoute, authKeys)) {
       /** [if] 是否存在children节点 */
       if (cloneRoute.routes) {
@@ -61,6 +60,5 @@ export function getRoutePaths (routes: AuthRoute[]): string[] {
 
 export function checkPageAuth (routes: AuthRoute[], path: string): boolean {
   const isCorrect: boolean = routes.findIndex((route: AuthRoute) => route.path === path) !== -1
-  console.log('checkPageAuth', isCorrect, routes, path)
   return isCorrect
 }

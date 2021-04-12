@@ -32,7 +32,7 @@ const AvatarDropdown = () => {
   );
   return (
     <div className={ styles.avatarBar }>
-      <Dropdown overlay={ menuHeaderDropdown }>
+      <Dropdown overlay={ menuHeaderDropdown } placement="bottomCenter" >
         <span className={ styles.avatarText }>
         <Avatar className={ styles.avatarImage } size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar" />
         啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊

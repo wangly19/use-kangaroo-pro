@@ -1,7 +1,7 @@
 import authRoutes from './authRoutes'
 export default [
-  { path: '/login', component: '@/pages/User/Login' },
-  { path: '/error', component: '@/pages/Errors' },
+  { path: '/login', component: '@/pages/user/login' },
+  { path: '/error', component: '@/pages/errors' },
   {
     path: '/',
     component: '@/layouts/index',

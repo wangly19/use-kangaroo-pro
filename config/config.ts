@@ -6,12 +6,18 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none'
   },
+  history: {
+    type: 'hash'
+  },
+  manifest: {
+    basePath: '/dist/',
+    fileName: 'manifest.json',
+    publicPath: '/',
+},
+  antd: {
+  },
   routes,
   fastRefresh: {},
-  hash: true,
-  antd: {},
-  dva: {
-  },
   alias: {
     '@/types': '../typings.d.ts'
   },

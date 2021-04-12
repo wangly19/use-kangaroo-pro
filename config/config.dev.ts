@@ -5,6 +5,7 @@ export default defineConfig({
     mode: 'emit'
   },
   define: {
-    APP_SELECT_KEY: 'key'
+    APP_SELECT_KEY: 'key',
+    ICON_FONT_URL: '//at.alicdn.com/t/font_2479004_mz3zxbz3pf.js',
   }
 })

@@ -1,16 +1,7 @@
 import { createElement } from 'react'
 import { history, fetchUserInfo } from 'umi';
-import { message } from 'antd';
 import AuthPage from './components/action/AuthPage'
 import type { AuthRoute } from '@/types';
-
-export const dva = {
-  config: {
-    onError(e: Error) {
-      message.error(e.message, 3);
-    },
-  },
-};
 
 export async function getInitialState(): Promise<{
   user?: API.UserInfo;
