@@ -9,11 +9,7 @@ export default defineConfig({
   history: {
     type: 'hash'
   },
-  manifest: {
-    basePath: '/dist/',
-    fileName: 'manifest.json',
-    publicPath: '/',
-},
+  base: '/',
   antd: {
   },
   routes,

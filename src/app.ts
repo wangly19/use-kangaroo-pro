@@ -1,7 +1,7 @@
+import type { AuthRoute } from '@/types';
 import { createElement } from 'react'
 import { history, fetchUserInfo } from 'umi';
 import AuthPage from './components/action/AuthPage'
-import type { AuthRoute } from '@/types';
 
 export async function getInitialState(): Promise<{
   user?: API.UserInfo;

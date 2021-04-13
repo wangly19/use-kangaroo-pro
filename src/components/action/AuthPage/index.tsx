@@ -5,8 +5,6 @@ import type { UserInfo } from 'umi';
 import { useModel } from 'umi'
 import { diffRoutes } from "@/utils/auth";
 
-
-
 interface AuthPageProps {
   routes: AuthRoute[],
   children: ReactElement

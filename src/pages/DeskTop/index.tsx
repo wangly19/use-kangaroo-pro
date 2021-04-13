@@ -1,14 +1,14 @@
 import styles from './index.less'
+import Access from '@/components/action/AuthPage/access'
 
 export default function IndexPage () {
-
   return (
     <div>
-      {APP_SELECT_KEY}
+      <Access access={ 12 }>
+        1111
+      </Access>
       <h1 className={styles.title}>
         Page index
-        
-    <i data-feather="circle"></i>
       </h1>
     </div>
   )

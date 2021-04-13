@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { history, Link } from 'umi'
 import ProLayout from '@ant-design/pro-layout';
 import GlobalHeader from './Global/Header'
+import defaultSetting from '../../config/defaultSetting'
 import styles from './index.less';
 
 export type BasicLayoutProps = {
@@ -43,6 +44,7 @@ const AppLayout: FunctionComponent<BasicLayoutProps> = (props) => {
         route={ route }
         menuItemRender={ MenuChildrenRender }
         rightContentRender= {() => <GlobalHeader/>}
+        {...defaultSetting}
       >
          { children }
       </ProLayout>
