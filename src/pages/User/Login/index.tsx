@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { history, useModel } from 'umi'
+import { history, fetchLogin, useModel } from 'umi'
 import { Tabs } from 'antd';
 import ProForm, { ProFormText, ProFormCheckbox } from '@ant-design/pro-form';
 import {
@@ -13,13 +13,26 @@ import styles from './index.less';
 
 export default () => {
   const [, setTabType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState')
 
-  console.log(initialState, setInitialState)
-
-  const onLoginFinish = (value: any): Promise<any> => {
-    history.replace('/')
-    return Promise.resolve(value)
+  const onLoginFinish = async (value: {
+    accountNumber: string,
+    password: string,
+  }): Promise<boolean> => {
+    const data = await fetchLogin(value)
+    if (data?.token) {
+      localStorage.setItem('access_token', data?.token)
+      if (initialState?.queryUserInfo) {
+        const user = await initialState.queryUserInfo(data?.token)
+        setInitialState({
+          ...initialState,
+          token: data?.token,
+          user,
+        })
+        history.replace('/')
+      }
+    }
+    return Promise.resolve(true)
   }
 
   return (

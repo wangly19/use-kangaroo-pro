@@ -5,9 +5,8 @@ export default defineConfig({
   define: {
     APP_SELECT_KEY: 'key',
     ICON_FONT_URL: '//at.alicdn.com/t/font_2479004_mz3zxbz3pf.js',
+    INTERFACE_URL: 'https://www.fastmock.site/mock/34aaa11d0784056080a17335de2e1751/api',
   },
-  base: './',
-  publicPath: './',
   devtool: false,
   dynamicImportSyntax: {},
   dynamicImport: {},
@@ -19,7 +18,7 @@ export default defineConfig({
     ios: false,
   },
   chunks: ['antd', 'vendors.umi', 'umi'],
-  chainWebpack: function (config, { webpack }) {
+  chainWebpack: function (config) {
     config.optimization.splitChunks({
       chunks: 'all',
       automaticNameDelimiter: '.',

@@ -4,7 +4,8 @@ import routes from './routes'
 export default defineConfig({
   plugins: ['plugin-transform-api'],
   nodeModulesTransform: {
-    type: 'none'
+    type: 'none',
+    exclude: [],
   },
   history: {
     type: 'hash'

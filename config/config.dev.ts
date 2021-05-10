@@ -7,5 +7,7 @@ export default defineConfig({
   define: {
     APP_SELECT_KEY: 'key1',
     ICON_FONT_URL: '//at.alicdn.com/t/font_2479004_mz3zxbz3pf.js',
+    INTERFACE_URL: '/api',
+    MOCK_URL: '/xxxx/mock'
   }
 })

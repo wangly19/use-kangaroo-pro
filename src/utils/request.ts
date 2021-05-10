@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { history } from 'umi'
 import type { ResponseError } from 'umi-request';
 import { extend } from 'umi-request';
-import { notification, Modal } from 'antd';
+import { notification, Modal, message as showMessage } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const codeMessage: Record<number, string> = {
@@ -24,9 +24,47 @@ const codeMessage: Record<number, string> = {
   504: '网关超时。',
 };
 
+/**
+ * 显示通知弹窗
+ * @param showParams 显示通知参数
+ * @param api 当前标识
+ */
+export function showMessageNotificationHandler (
+  showParams: API.CommonResult['showMessage'],
+  api: string = ''
+): void {
+  /** @name 判断是否开启了通知描述显示 */
+  if (showParams) {
+    const {
+      method,
+      type,
+      message,
+      description,
+    } = showParams
+    switch (method) {
+      /** @name 全局提示弹窗 */
+      case 'message':
+        showMessage[type](message)
+        break;
+
+      /** @name 通知提示弹窗 */
+      case 'notification':
+        notification[type]({
+          message,
+          description
+        })
+          break;
+      default:
+        throw new Error(`[ request ]: 接口约定了弹窗信息参数，但是未给出使用模型，请检测当前。${api}`)
+    }
+  }
+}
+
 /** 异常处理程序 */
-function errorHandler (error: ResponseError) {
-  const { response } = error;
+function errorHandler (error: ResponseError<any> & {
+  code?: string | number
+}) {
+  const { response, request } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
@@ -37,7 +75,12 @@ function errorHandler (error: ResponseError) {
     });
   }
 
-  return error 
+  if (error.code && error.code === 5000) {
+    // 上报出错人和token,
+    throw new Error(`[fetch fail]: 接口请求失败，当前接口地址${request.url}`)
+  }
+
+  return Promise.reject(error) 
 };
 
 /**
@@ -58,7 +101,22 @@ function clearUserTraces () {
 
 /** 配置request请求时的默认参数 */
 const request = extend({
-  errorHandler
+  prefix: INTERFACE_URL,
+  errorHandler,
+  mode: 'no-cors',
+});
+
+/** access_Token + select_key混入 */
+request.interceptors.request.use((url, options) => {
+  const token: string = localStorage.getItem('access_token') || ''
+  const headers: RequestInit['headers'] & {
+    AccessToken: string,
+  } = Object.assign(options.headers, {
+    AccessToken: `${ APP_SELECT_KEY }${token}`
+  })
+  return {
+    options: { ...options, headers },
+  };
 });
 
 request.interceptors.response.use(
@@ -66,7 +124,7 @@ request.interceptors.response.use(
     const responseBody = await response.clone().json();
 
     /** [code success] 接口请求成功，不需要额外处理 */
-    if (responseBody.code === '200') {
+    if (responseBody.code === 2000) {
       return responseBody.data
     }
 
@@ -76,15 +134,19 @@ request.interceptors.response.use(
      * [ u -> 4003 ] 用户在其他地方登录，清除后重新生成新的身份
      * */
     if (
-      responseBody.code === 'U4001' || 
-      responseBody.code === 'U4002' || 
-      responseBody.code === 'U4003'
+      responseBody.code === 4001 || 
+      responseBody.code === 4002 || 
+      responseBody.code === 4003
     ) {
       clearUserTraces()
       return undefined
     }
 
-    throw new Error('request fail ...')
+    if (responseBody.showMessage) {
+      showMessageNotificationHandler(responseBody.showMessage)
+    }
+
+    throw responseBody
   }
 )
 

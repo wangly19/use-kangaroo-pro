@@ -1,6 +1,8 @@
+import mockjs from 'mockjs';
+
 export default {
   'POST /api/service-admin/v1/user/info': {
-    code: '200',
+    code: 2000,
     message: '操作成功',
     data: {
       name: 'wangly19',
@@ -11,4 +13,12 @@ export default {
       usePageAuth: [12, 20, 13, 22, 31, 29, 17]
     },
   },
+  'POST /api/service-admin/v1/user/login': mockjs.mock({
+    code: 2000,
+    message: '操作成功',
+    showMessage: false,
+    data: {
+      token: '@string'
+    }
+  },)
 }

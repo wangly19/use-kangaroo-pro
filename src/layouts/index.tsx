@@ -6,7 +6,7 @@ import type {
 import { useState } from 'react';
 import { history, Link } from 'umi'
 import ProLayout from '@ant-design/pro-layout';
-import GlobalHeader from './Global/Header'
+import GlobalHeader from './Global/header'
 import defaultSetting from '../../config/defaultSetting'
 import styles from './index.less';
 

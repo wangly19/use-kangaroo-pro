@@ -1,16 +1,21 @@
 {
   "private": true,
   "scripts": {
-    "start": "cross-env UMI_ENV=dev umi dev",
+    "start:dev": "cross-env REACT_ENV=dev UMI_ENV=dev umi dev",
+    "start:test": "cross-env REACT_ENV=test UMI_ENV=dev umi dev",
+    "start:pre": "cross-env REACT_ENV=pre UMI_ENV=dev umi dev",
+    "start:pro": "cross-env REACT_ENV=pro UMI_ENV=dev umi dev",
+    "build:dev": "cross-env REACT_ENV=dev UMI_ENV=pro umi build",
+    "build:test": "cross-env REACT_ENV=test UMI_ENV=pro umi build",
+    "build:pre": "cross-env REACT_ENV=pre UMI_ENV=pro umi build",
+    "build:pro": "cross-env REACT_ENV=pro UMI_ENV=pro umi build",
     "build": "cross-env UMI_ENV=pro umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ./src"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -21,9 +26,12 @@
   "dependencies": {
     "@ant-design/pro-form": "^1.19.0",
     "@ant-design/pro-layout": "^6.5.0",
+    "@ant-design/pro-table": "^2.33.0",
     "@umijs/preset-react": "1.x",
     "classnames": "^2.2.6",
     "dayjs": "^1.10.4",
+    "react-query": "^3.15.2",
+    "swr": "^0.5.6",
     "umi": "^3.4.7"
   },
   "devDependencies": {
@@ -38,12 +46,11 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "lint-staged": "^10.0.7",
-    "plugin-transform-api": "^1.0.0",
+    "mockjs": "^1.1.0",
+    "plugin-transform-api": "^1.0.3",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
-    "redux-logger": "^3.0.6",
-    "typescript": "^4.2.3",
-    "yorkie": "^2.0.0"
+    "typescript": "^4.2.3"
   }
 }

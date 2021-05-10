@@ -24,6 +24,8 @@ declare global {
   const INTERFACE_URL: string
   // #字体图标资源
   const ICON_FONT_URL: string
+  
+  const MOCK_URL: string
 }
 
 export type AuthRoute = BasicLayoutProps['route'] & {

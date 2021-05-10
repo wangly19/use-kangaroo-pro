@@ -5,7 +5,6 @@ const Settings: LayoutSettings & {
   logo?: string;
 } = {
   navTheme: 'light',
-  primaryColor: '#1890ff',
   layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
@@ -14,7 +13,6 @@ const Settings: LayoutSettings & {
   title: 'Ant Design Pro',
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-  iconfontUrl: '',
 };
 
 export default Settings;

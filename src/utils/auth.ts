@@ -46,7 +46,7 @@ export function hasRoles (route: AuthRoute, authKeys: string[]): boolean {
 export function diffRoutes (routes: AuthRoute[], authKeys: string[]): AuthRoute[] {
 
   /** [if] 如果用户权限包含超级管理员，默认拥有所有菜单权限 */
-  if (authKeys.includes('admin')) {
+  if (authKeys.includes('超级管理员')) {
     return routes
   }
   

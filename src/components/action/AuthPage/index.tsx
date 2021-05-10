@@ -1,7 +1,6 @@
 import type { AuthRoute } from "@/types";
 import type { FC, ReactElement} from "react";
 import { cloneElement, useMemo } from 'react'
-import type { UserInfo } from 'umi';
 import { useModel } from 'umi'
 import { diffRoutes } from "@/utils/auth";
 
@@ -10,18 +9,19 @@ interface AuthPageProps {
   children: ReactElement
 }
 
-const AuthPage: FC<AuthPageProps> = (props) => {
+const AuthProvider: FC<AuthPageProps> = (props) => {
 
   /** [props] */
   const { children, routes } = props
 
   /** [model] */
-  const { initialState } = useModel('@@initialState')
+  const { user } = useModel('@@initialState', (model) => ({
+    user: model.initialState?.user,
+  }))
 
   const patchRoutes = useMemo(() => {
-    const user: UserInfo | undefined = initialState?.user
     return diffRoutes(routes, user?.useMenuAuth || [])
-  }, [initialState, routes])
+  }, [user, routes])
 
   return cloneElement(children, {
     ...children.props,
@@ -29,4 +29,4 @@ const AuthPage: FC<AuthPageProps> = (props) => {
   })
 }
 
-export default AuthPage
+export default AuthProvider

@@ -1,4 +1,9 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { useModel } from '@/.umi/plugin-model/useModel';
+import {
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Dropdown } from 'antd';
 import styles from './index.less';
 
@@ -7,22 +12,21 @@ export type GlobalHeaderRightProps = {
 };
 
 const AvatarDropdown = () => {
-  const menu = true
+
+  const { initialState } = useModel('@@initialState')
+
   const menuHeaderDropdown = (
     <Menu selectedKeys={[]}>
-      {menu && (
-        <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
-        </Menu.Item>
-      )}
-      {menu && (
-        <Menu.Item key="settings">
-          <SettingOutlined />
-          个人设置
-        </Menu.Item>
-      )}
-      {menu && <Menu.Divider />}
+      <Menu.Item key="center">
+        <UserOutlined />
+        个人中心
+      </Menu.Item>
+
+      <Menu.Item key="settings">
+        <SettingOutlined />
+        个人设置
+      </Menu.Item>
+      <Menu.Divider />
 
       <Menu.Item key="logout">
         <LogoutOutlined />
@@ -31,15 +35,20 @@ const AvatarDropdown = () => {
     </Menu>
   );
   return (
-    <div className={ styles.avatarBar }>
-      <Dropdown overlay={ menuHeaderDropdown } placement="bottomCenter" >
-        <span className={ styles.avatarText }>
-        <Avatar className={ styles.avatarImage } size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar" />
-        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+    <div className={styles.avatarBar}>
+      <Dropdown overlay={menuHeaderDropdown} placement="bottomCenter">
+        <span className={styles.avatarText}>
+          <Avatar
+            className={styles.avatarImage}
+            size="small"
+            src={ initialState?.user?.avatar }
+            alt="avatar"
+          />
+          { initialState?.user?.name }
         </span>
       </Dropdown>
     </div>
-  )
-}
+  );
+};
 
-export default AvatarDropdown
+export default AvatarDropdown;
